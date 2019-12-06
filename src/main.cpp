@@ -4,8 +4,10 @@
 #include <vector>
 #include <memory>
 #include <tuple>
+#include <vtkUnstructuredGrid.h>
 
 #include "options.hpp"
+#include "viewer.hpp"
 
 void print_usage()
 {
@@ -39,6 +41,12 @@ int main(int argc, char **argv)
       return EXIT_FAILURE;
     }
     file_name = argv[2];
+
+    auto viewer = new Viewer(file_name);
+
+    viewer -> interract();
+
+    delete viewer;
   } else if (command == "-t" || command == "--transform") {
     if (argc < 3) {
       std::cerr << "Error: missing file\n";
