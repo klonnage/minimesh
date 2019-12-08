@@ -12,7 +12,7 @@ public:
 
   // TODO: modifier le type de retour en cohérence
   // avec la structure de données renvoyée.
-  void parse(void);
+  std::shared_ptr<Params> parse(void);
 
 private:
   std::string m_file_name;

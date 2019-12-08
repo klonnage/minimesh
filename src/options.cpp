@@ -1,6 +1,7 @@
 #include <memory>
 
 #include "options.hpp"
+#include "transform.hpp"
 
 OptionsParser::OptionsParser(const std::string& file_name)
   : m_file_name(file_name)
@@ -8,8 +9,9 @@ OptionsParser::OptionsParser(const std::string& file_name)
   m_data = cpptoml::parse_file(m_file_name);
 }
 
-void OptionsParser::parse(void)
+std::shared_ptr<Params> OptionsParser::parse(void)
 {
+  std::shared_ptr<Params> res;
   auto transform = m_data->get_table("transform");
   auto name = *transform->get_as<std::string>("name");
 
@@ -22,6 +24,8 @@ void OptionsParser::parse(void)
 
     auto quality = m_data->get_table("quality");
     bool compute_quality = *quality->get_as<bool>("compute_quality");
+
+    res = std::shared_ptr<MergeParams>(new MergeParams(meshes, result_file_name, compute_quality));
   } else if (name.compare("translate") == 0) {
     std::vector<double> coords = *transform->get_array_of<double>("translation");
 
@@ -31,6 +35,9 @@ void OptionsParser::parse(void)
 
     auto quality = m_data->get_table("quality");
     bool compute_quality = *quality->get_as<bool>("compute_quality");
+
+    res = std::shared_ptr<TranslationParams>(new TranslationParams(coords, mesh, result_file_name, compute_quality));
   } else {
   }
+  return res;
 }

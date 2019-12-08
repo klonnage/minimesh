@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     }
     file_name = argv[2];
     auto op = new OptionsParser(file_name);
-    /*auto params = */op->parse();
+    auto params = op->parse();
     delete op;
   } else {
     std::cerr << "Error: unknown command\n";
