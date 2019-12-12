@@ -82,8 +82,6 @@ public:
       auto readers = new vtkSmartPointer<vtkXMLUnstructuredDataReader>[meshes.size()];
 
       append_mapper -> SetMergePoints(merge_param -> m_merge_nodes);
-      if(merge_param -> m_compute_quality)
-        vtkAppendFilter :: SetTolerance(1e-16);
 
       int i = 0;
       for (auto mesh : meshes)
