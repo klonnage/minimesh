@@ -25,7 +25,7 @@ std::shared_ptr<Params> OptionsParser::parse(void)
     auto quality = m_data->get_table("quality");
     bool compute_quality = *quality->get_as<bool>("compute_quality");
 
-    res = std::shared_ptr<MergeParams>(new MergeParams(meshes, result_file_name, compute_quality));
+    res = std::shared_ptr<MergeParams>(new MergeParams(meshes, result_file_name, compute_quality, merge_nodes));
   } else if (name.compare("translate") == 0) {
     std::vector<double> coords = *transform->get_array_of<double>("translation");
 

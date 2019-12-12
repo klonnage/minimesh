@@ -5,6 +5,7 @@
 #include <memory>
 #include <tuple>
 #include <vtkUnstructuredGrid.h>
+#include <unistd.h>
 
 #include "options.hpp"
 #include "viewer.hpp"
@@ -56,7 +57,10 @@ int main(int argc, char **argv)
     file_name = argv[2];
     auto op = new OptionsParser(file_name);
     auto params = op->parse();
+    Transform transform(params);
+    transform();
     delete op;
+    exit(EXIT_SUCCESS);
   } else {
     std::cerr << "Error: unknown command\n";
     print_usage();
